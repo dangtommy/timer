@@ -1,0 +1,22 @@
+{
+  "manifest_version": 1,
+  "name": "Timer Extension",
+  "description": "This extension shows how much time is spent on websites",
+  "version: "1.0",
+
+	/* 
+		To be filled with icon image file and html file displaying website info
+  "browser_action": {
+    "default_icon": 
+		"default_popup": 
+  },
+	*/
+
+	/* To be filled with permissions based on the API we will be using. Specific to
+	commands we will use. Use chrome api as reference
+  
+	"permissions": [
+
+	]
+	*/
+}
