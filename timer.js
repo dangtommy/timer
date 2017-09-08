@@ -1,23 +1,23 @@
 function Timer (hostname) {
 	this.hostname = hostname;
 	this.time = 0;
-	
-	//getters
-	this.getTime() = function() {
-		return this.time;
-	}
+}
 
-	this.getHostname() = function() {
-		return this.hostname;
-	}
+//getters
+Timer.prototype.getTime = function() {
+	return this.time;
+}
 
-	//increments every minute
-	this.increment = setInterval(function() {
-		this.time += 1;
-	}, 60000);
+Timer.prototype.getHostname = function() {
+	return this.hostname;
+}
 
-	//stops incrementing
-	this.stopIncrement = function() {
-		clearInterval(this.increment);
-	}
+//increments every minute
+Timer.prototype.increment = setInterval(function() { 
+	this.time += 1;
+	}, 60 * 1000);
+
+//stops incrementing
+Timer.prototype.stopIncrement = function() {
+	clearInterval(this.increment);
 }
