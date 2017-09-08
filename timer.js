@@ -21,3 +21,4 @@ Timer.prototype.increment = setInterval(function() {
 Timer.prototype.stopIncrement = function() {
 	clearInterval(this.increment);
 }
+
