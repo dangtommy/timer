@@ -1,20 +1,13 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 2,
   "name": "Timer Extension",
   "description": "This extension shows how much time is spent on websites",
-  "version: "1.0",
+  "version": "1.0",
 
   "browser_action": {
-/*
-    "default_icon": 
-		To be filled with icon image file and html file displaying website info*/
 		"default_popup": "popup.html"
   },
 
-	/* To be filled with permissions based on the API we will be using. Specific to
-	commands we will use. Use chrome api as reference
-	*/
-  
 	"permissions": [
 	"tabs",
 	"activeTab"
