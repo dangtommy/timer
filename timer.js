@@ -12,13 +12,7 @@ Timer.prototype.getHostname = function() {
 	return this.hostname;
 }
 
-//increments every minute
-Timer.prototype.increment = setInterval(function() { 
+Timer.prototype.increment =  function() {
 	this.time += 1;
-	}, 60 * 1000);
-
-//stops incrementing
-Timer.prototype.stopIncrement = function() {
-	clearInterval(this.increment);
 }
 

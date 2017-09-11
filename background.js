@@ -12,5 +12,5 @@ function showHostName () {
 		var hostname = url.hostname;
 		alert("The hostname is: " + hostname);
 	});
-}, 5000);
+}, 5000); //every minute
 }
