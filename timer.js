@@ -1,6 +1,7 @@
 function Timer (hostname) {
 	this.hostname = hostname;
 	this.time = 0;
+	return(this);
 }
 
 //getters
