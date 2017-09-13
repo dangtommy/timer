@@ -2,6 +2,7 @@ var but = document.getElementById("button1");
 /* I used console.log() to check variables and to see if variables were getting updated */
 function click() {
 	console.log("hey"); //to see if function is runnin properly
+	//console.log(number);
 	var timer = new Timer("test.com");
 	console.log(timer.getTime()); //this method works
 	console.log(timer.getHostname()); //this method works
