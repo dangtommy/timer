@@ -21,6 +21,7 @@ Timer.prototype.increment =  function() {
 	this.time += 1;
 }
 
+
 /**
 function showHostName () {
 	setInterval(function(){
@@ -40,9 +41,9 @@ var currentTimer;
 
 function checkHostName () {
 	setInterval(function(){
-	chrome.tabs.query({
-		"active": true,
-		"lastFocusedWindow": true
+		chrome.tabs.query({
+			"active": true,
+			"lastFocusedWindow": true
 	}, function(tabArray) {
 		var url = new URL(tabArray[0].url);
 		var hostname = url.hostname;
@@ -50,6 +51,7 @@ function checkHostName () {
 		if (!currentTimer) {
 			currentTimer = new Timer(hostname);
 			timerArray.push(currentTimer);
+			currentTimer.increment();
 		}
 		//check if no change
 		else if (hostname == currentTimer.getHostname()) {
@@ -63,12 +65,14 @@ function checkHostName () {
 				if (hostname == timerArray[i].hostname) {
 					present = true;
 					currentTimer = timerArray[i];
+					currentTimer.increment();
 				}
 			}
 			//if not in array, will add new timer
 			if (!present) {
 				currentTimer = new Timer(hostname);
 				timerArray.push(currentTimer);
+				currentTimer.increment();
 			}
 		}
 		alert("The hostname is: " + currentTimer.getHostname()
