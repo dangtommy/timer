@@ -2,7 +2,8 @@ var but = document.getElementById("button1");
 /* I used console.log() to check variables and to see if variables were getting updated */
 function click() {
 	console.log("hey"); //to see if function is runnin properly
-	//console.log(number);
+	var background = chrome.extension.getBackgroundPage(); //testing  getting background
+	console.log(background.number); // testing getting variable in background
 	var timer = new Timer("test.com");
 	console.log(timer.getTime()); //this method works
 	console.log(timer.getHostname()); //this method works
