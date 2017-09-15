@@ -1,14 +1,14 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-	checkHostName();
-});
+// Variables for storing data
+var timerArray = [];	
+var currentTimer;
 
+/** Timer Object Type, Functions */
 function Timer (hostname) {
 	this.hostname = hostname;
 	this.time = 0;
 	return(this);
 }
 
-//getters
 Timer.prototype.getTime = function() {
 	return this.time;
 }
@@ -20,27 +20,27 @@ Timer.prototype.getHostname = function() {
 Timer.prototype.increment =  function() {
 	this.time += 1;
 }
+/* End Timer */
 
-
-/**
-function showHostName () {
-	setInterval(function(){
-	chrome.tabs.query({
-		"active": true,
-		"lastFocusedWindow": true
-	}, function(tabArray) {
-		var url = new URL(tabArray[0].url);
-		var hostname = url.hostname;
-		alert("The hostname is: " + hostname);
-	});
-}, 5000);
+/** Functions to control the timer */
+function startTimer () {
+	setChecker = setInterval(function(){
+	checkHostName();
+	}, 1000);
 }
-*/
-var timerArray = [];	
-var currentTimer;
+
+function stopTimer () {
+	clearInterval(setChecker);
+}
+
+function resetTimer () {
+	stopTimer();
+	timerArray.length = 0;
+	currentTimer.time = 0;
+	startTimer();
+}
 
 function checkHostName () {
-	setInterval(function(){
 		chrome.tabs.query({
 			"active": true,
 			"lastFocusedWindow": true
@@ -79,5 +79,5 @@ function checkHostName () {
 				+ " with time " + currentTimer.getTime());
 		
 	});
-}, 1000);
+
 }
