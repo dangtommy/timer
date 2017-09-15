@@ -1,3 +1,4 @@
+startTimer();
 // Variables for storing data
 var timerArray = [];	
 var currentTimer;
