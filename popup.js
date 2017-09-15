@@ -20,6 +20,7 @@ for(var x = 0; x < length; x++)
 	
 } 
 topNum = 5;
+console.log(length);
 //incase theres less than 5 websites so we dont access things that arnt there
 if(length < 5)
 {
