@@ -1,9 +1,29 @@
+/*****************************************
+	Retrieving Info from background.js
+*****************************************/
+
 var backgroundWindow = chrome.extension.getBackgroundPage();
 var copyTimerArray = backgroundWindow.timerArray;
 
+/**********************
+	Day Indicator
+**********************/
+var weekday = [];
+weekday[0] = "Sunday";
+weekday[1] = "Monday";
+weekday[2] = "Tuesday";
+weekday[3] = "Wednesday";
+weekday[4] = "Thursday";
+weekday[5] = "Friday";
+weekday[6] = "Saturday";
+document.getElementById("day").innerHTML = weekday[backgroundWindow.currDay] + " Timer";
+
+/*********************
+	Selection Sort 
+*********************/
 var length = copyTimerArray.length;
 var max,temp,topNum;
-//selection sort
+
 for(var x = 0; x < length; x++)
 {
 	max = x;
@@ -19,39 +39,27 @@ for(var x = 0; x < length; x++)
 	copyTimerArray[max] = temp;
 	
 } 
-topNum = 5;
-console.log(length);
+
 //incase theres less than 5 websites so we dont access things that arnt there
+topNum = 5;
 if(length < 5)
 {
 	topNum = length;
 }
+
 //im sure theres a more elegent way to do this.. but i didn't know how to access
 //different ID's within one if statement so i just did this 
+
 for(x = 0; x<topNum; x++)
 {
-	if(x == 0){
-		document.getElementById("website1").innerHTML = 
-				copyTimerArray[0].hostname + " " + copyTimerArray[0].time;
-	}
-	if(x == 1){	
-		document.getElementById("website2").innerHTML = 
-				copyTimerArray[1].hostname + " " + copyTimerArray[1].time;
-	}
-	if(x == 2){
-		document.getElementById("website3").innerHTML = 
-				copyTimerArray[2].hostname + " " + copyTimerArray[2].time;
-	}
-	if(x == 3){
-		document.getElementById("website4").innerHTML = 
-				copyTimerArray[3].hostname + " " + copyTimerArray[3].time;
-	}
-	if(x == 4){
-		document.getElementById("website5").innerHTML = 
-				copyTimerArray[4].hostname + " " + copyTimerArray[4].time;
-	}
+	document.getElementById("website"+(x+1)).innerHTML = 
+			copyTimerArray[x].hostname + " " + copyTimerArray[x].time;
 }
 
+/*****************************
+ Functions to access background 
+ timer from popup.js 
+ *****************************/
 function popupStart () {
 	backgroundWindow.startTimer();
 }
@@ -64,6 +72,10 @@ function reset() {
 	backgroundWindow.resetTimer();
 }
 
+/******************************
+Popup.html Button Functionality
+******************************/
 document.getElementById('start').onclick = popupStart;
 document.getElementById('stop').onclick = popupStop;
 document.getElementById('reset').onclick = reset;
+

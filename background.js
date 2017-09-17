@@ -1,10 +1,40 @@
+/** Begin timer on startup */
 var running = false;
 startTimer();
-// Variables for storing data
-var timerArray = [];	
-var currentTimer;
 
-/** Timer Object Type, Functions */
+/***************************
+	Week-Level Variables
+	
+Keeps track of day information
+so the timer can keep track of 
+weekly information
+****************************/
+var weeklyTimerArray = [];
+var date = new Date();
+var currDay = date.getDay();
+
+/* 0-6 corresponds to sun-sat */
+for (var i = 0; i < 7; i++) {
+	weeklyTimerArray[i] = [];
+}
+
+/* Update timer array */
+function updateTimerArray () {
+	timerArray = weeklyTimerArray[currDay];
+	timerArray.length = 0;
+	currentTimer = null;
+	currDay = date.getDay();
+}
+
+// Variables for storing data	
+var currentTimer;
+/* Set timer to day's corresponding timer */
+var timerArray = weeklyTimerArray[date.getDay()];
+
+/***********************
+	Timer Object Type
+	& Object Functions
+***********************/
 function Timer (hostname) {
 	this.hostname = hostname;
 	this.time = 0;
@@ -22,15 +52,19 @@ Timer.prototype.getHostname = function() {
 Timer.prototype.increment =  function() {
 	this.time += 1;
 }
-/* End Timer */
 
-/** Functions to control the timer */
+/************************************
+	Timer Control Functions
+*************************************/
 function startTimer () {
 	console.log("starting timer");
 	if(running == false)
 	{
 		setChecker = setInterval(function(){
-		checkHostName();
+			checkHostName();
+			if (currDay != day.getDay()) {
+				updateTimerArray();
+			}
 		}, 1000);
 		running = true;
 	}
