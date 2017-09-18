@@ -20,16 +20,17 @@ for (var i = 0; i < 7; i++) {
 
 /* Update timer array */
 function updateTimerArray () {
+	currDay = date.getDay(); //should update day first
+	yesterdayArray = timerArray;
 	timerArray = weeklyTimerArray[currDay];
 	timerArray.length = 0;
 	currentTimer = null;
-	currDay = date.getDay();
 }
 
 // Variables for storing data	
-var currentTimer;
+var currentTimer, yesterdayArray;
 /* Set timer to day's corresponding timer */
-var timerArray = weeklyTimerArray[date.getDay()];
+var timerArray = weeklyTimerArray[currDay];
 
 /***********************
 	Timer Object Type
@@ -61,10 +62,10 @@ function startTimer () {
 	if(running == false)
 	{
 		setChecker = setInterval(function(){
-			checkHostName();
-			if (currDay != day.getDay()) {
+			if (currDay != date.getDay()) {
 				updateTimerArray();
 			}
+			checkHostName();
 		}, 1000);
 		running = true;
 	}
@@ -84,6 +85,7 @@ function resetTimer () {
 function checkHostName () {
 		chrome.tabs.query({
 			"active": true,
+			"currentWindow": true,
 			"lastFocusedWindow": true
 	}, function(tabArray) {
 		var url = new URL(tabArray[0].url);

@@ -40,16 +40,14 @@ for(var x = 0; x < length; x++)
 	
 } 
 
-//incase theres less than 5 websites so we dont access things that arnt there
+//Incase theres less than 5 websites so we dont access things that arnt there
 topNum = 5;
 if(length < 5)
 {
 	topNum = length;
 }
 
-//im sure theres a more elegent way to do this.. but i didn't know how to access
-//different ID's within one if statement so i just did this 
-
+//Shows top websites and their time in popup.html
 for(x = 0; x<topNum; x++)
 {
 	document.getElementById("website"+(x+1)).innerHTML = 
