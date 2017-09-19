@@ -90,7 +90,14 @@ function checkHostName () {
 			"lastFocusedWindow": true
 	}, function(tabArray) {
 			var url = new URL(tabArray[0].url);
+			console.log("this is whats in url " + url);
+			if(url == "popup.html")
+			{
+				console.log("its popup.html");
+				return;
+			}
 			var hostname = url.hostname;
+			
 			//null check
 			if (!currentTimer) {
 				currentTimer = new Timer(hostname);
@@ -131,6 +138,87 @@ function checkChromeUse () {
 		if (browser.focused) {
 			checkHostName();
 		}
+		else {
+		console.log(" not focused");
+		}
 	})
 }
+
+function getLastWeek(sepWeekArray) {
+	var wholeWeekArray = [];
+	//combining all arrays in the 7day array into one array
+	for(var i = 0; i<6; i++)
+	{
+		wholeWeekArray = wholeWeekArray.concat(sepWeekArray[i]);
+
+	}	
+	//checking for dups, adding time if dup found and setting one to null
+	for(i = 0; i < wholeWeekArray.length; i++)
+	{
+		if(wholeWeekArray[i] == null)
+		{
+			continue;
+		}
+		for(var y = i+1; y < wholeWeekArray.length; y++)
+		{
+			if(wholeWeekArray[y] == null)
+			{
+				continue;
+			}
+			if(wholeWeekArray[i].getHostname() == wholeWeekArray[y].getHostname())
+			{
+				wholeWeekArray[i].time += wholeWeekArray[y].time;
+				wholeWeekArray[y] = null;
+			}		
+
+		}	
+	}
+	
+	//copying over so there are no null gaps in the array. dunno if necessary but makes it cleaner
+	var combinedWeekArray = [];
+	y = 0;
+	for(i = 0; i < wholeWeekArray.length; i++)
+	{
+		if(wholeWeekArray[i] !== null)
+		{
+			combinedWeekArray[y] = wholeWeekArray[i];
+			y++;
+		}	
+	}	
+	return combinedWeekArray;
+	
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
