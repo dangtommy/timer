@@ -65,7 +65,8 @@ function startTimer () {
 			if (currDay != date.getDay()) {
 				updateTimerArray();
 			}
-			checkHostName();
+			checkChromeUse();
+			//checkHostName();
 		}, 1000);
 		running = true;
 	}
@@ -88,41 +89,48 @@ function checkHostName () {
 			"currentWindow": true,
 			"lastFocusedWindow": true
 	}, function(tabArray) {
-		var url = new URL(tabArray[0].url);
-		var hostname = url.hostname;
-		//null check
-		if (!currentTimer) {
-			currentTimer = new Timer(hostname);
-			console.log(currentTimer);
-			timerArray.push(currentTimer);
-			currentTimer.increment();
-		}
-		//check if no change
-		else if (hostname == currentTimer.getHostname()) {
-			currentTimer.increment();
-		}
-		//check if in array
-		else {
-			var present = false;
-			//if present, bring up the old timer
-			for (var i = 0; i < timerArray.length; i++) {
-				if (hostname == timerArray[i].hostname) {
-					present = true;
-					currentTimer = timerArray[i];
-					currentTimer.increment();
-				}
-			}
-			//if not in array, will add new timer
-			if (!present) {
+			var url = new URL(tabArray[0].url);
+			var hostname = url.hostname;
+			//null check
+			if (!currentTimer) {
 				currentTimer = new Timer(hostname);
+				console.log(currentTimer);
 				timerArray.push(currentTimer);
 				currentTimer.increment();
 			}
-		}
-//		alert("The hostname is: " + currentTimer.getHostname()
-//				+ " with time " + currentTimer.getTime());
-		console.log(timerArray[0].getHostname() + timerArray[0].getTime());
-		
+			//check if no change
+			else if (hostname == currentTimer.getHostname()) {
+				currentTimer.increment();
+			}
+			//check if in array
+			else {
+				var present = false;
+				//if present, bring up the old timer
+				for (var i = 0; i < timerArray.length; i++) {
+					if (hostname == timerArray[i].hostname) {
+						present = true;
+						currentTimer = timerArray[i];
+						currentTimer.increment();
+					}
+				}
+				//if not in array, will add new timer
+				if (!present) {
+					currentTimer = new Timer(hostname);
+					timerArray.push(currentTimer);
+					currentTimer.increment();
+				}
+			}
+		//	alert("The hostname is: " + currentTimer.getHostname()
+		//			+ " with time " + currentTimer.getTime());
+			console.log("Hostname: " + timerArray[0].getHostname() + " timer: " + timerArray[0].getTime());
 	});
-
 }
+
+function checkChromeUse () {
+	chrome.windows.getCurrent(function(browser) {
+		if (browser.focused) {
+			checkHostName();
+		}
+	})
+}
+
