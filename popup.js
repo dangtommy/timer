@@ -3,6 +3,10 @@
 *****************************************/
 
 var backgroundWindow = chrome.extension.getBackgroundPage();
+
+var option = document.getElementById("time");
+var selected = option.options[option.selectedIndex].value;
+
 var copyTimerArray = backgroundWindow.timerArray;
 
 /**********************
@@ -21,27 +25,29 @@ document.getElementById("day").innerHTML = weekday[backgroundWindow.currDay] + "
 /*********************
 	Selection Sort 
 *********************/
-var length = copyTimerArray.length;
-var max,temp,topNum;
-
-for(var x = 0; x < length; x++)
-{
-	max = x;
-	for(var y = x+1; y<length; y++)
+function selectionSort(timerArray){
+	var length = timerArray.length;
+	var max,temp;
+	for(var x = 0; x < length; x++)
 	{
-		if(copyTimerArray[y].time > copyTimerArray[max].time)
+		max = x;
+		for(var y = x+1; y<length; y++)
 		{
-			max = y;
+			if(timerArray[y].time > timerArray[max].time)
+			{
+				max = y;
+			}
 		}
-	}
-	temp = copyTimerArray[x];
-	copyTimerArray[x] = copyTimerArray[max];
-	copyTimerArray[max] = temp;
-	
-} 
+		temp = timerArray[x];
+		timerArray[x] = timerArray[max];
+		timerArray[max] = temp;
+	} 
+}
 
+selectionSort(copyTimerArray);
+var topNum =5
+var length = copyTimerArray.length;
 //Incase theres less than 5 websites so we dont access things that arnt there
-topNum = 5;
 if(length < 5)
 {
 	topNum = length;
@@ -54,6 +60,7 @@ for(x = 0; x<topNum; x++)
 			copyTimerArray[x].hostname + " " + copyTimerArray[x].time;
 }
 
+localStorage.setItem("array", JSON.stringify(copyTimerArray));
 /*****************************
  Functions to access background 
  timer from popup.js 
@@ -70,10 +77,14 @@ function reset() {
 	backgroundWindow.resetTimer();
 }
 
+function redirect() {	
+	location.href = "data.html";
+}
 /******************************
 Popup.html Button Functionality
 ******************************/
 document.getElementById('start').onclick = popupStart;
 document.getElementById('stop').onclick = popupStop;
 document.getElementById('reset').onclick = reset;
+document.getElementById('view').onclick = redirect;
 
