@@ -1,11 +1,13 @@
 	var data = localStorage.getItem("array");
 	data = JSON.parse(data);
-	//var test = data;
+	if(data == "No data for yesterday")
+		document.getElementById("timerData").innerHTML = data;
+	else{
 	var compiledData= "";
 	for(var x = 0; x<data.length; x++)
 	{
 		compiledData = compiledData.concat(data[x].hostname +
 						" " + data[x].time + "\n");
 	}
-	console.log(data[0].hostname);
 	document.getElementById("timerData").innerHTML = compiledData;
+	}

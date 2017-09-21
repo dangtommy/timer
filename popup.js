@@ -3,10 +3,6 @@
 *****************************************/
 
 var backgroundWindow = chrome.extension.getBackgroundPage();
-
-var option = document.getElementById("time");
-var selected = option.options[option.selectedIndex].value;
-
 var copyTimerArray = backgroundWindow.timerArray;
 
 /**********************
@@ -21,6 +17,28 @@ weekday[4] = "Thursday";
 weekday[5] = "Friday";
 weekday[6] = "Saturday";
 document.getElementById("day").innerHTML = weekday[backgroundWindow.currDay] + " Timer";
+
+/*************************************
+	Displaying top 5 websites by time in popup
+**************************************/
+var displayTop5 = setInterval(function() {
+	selectionSort(copyTimerArray);
+	var topNum =5
+	var length = copyTimerArray.length;
+	//Incase theres less than 5 websites so we dont access things that arnt there
+	if(length < 5)
+	{
+		topNum = length;
+	}
+	
+	//Shows top websites and their time in popup.html
+	for(x = 0; x<topNum; x++)
+	{
+		document.getElementById("website"+(x+1)).innerHTML = 
+				copyTimerArray[x].hostname + " " + copyTimerArray[x].time;
+	}
+},1000);
+
 
 /*********************
 	Selection Sort 
@@ -44,23 +62,6 @@ function selectionSort(timerArray){
 	} 
 }
 
-selectionSort(copyTimerArray);
-var topNum =5
-var length = copyTimerArray.length;
-//Incase theres less than 5 websites so we dont access things that arnt there
-if(length < 5)
-{
-	topNum = length;
-}
-
-//Shows top websites and their time in popup.html
-for(x = 0; x<topNum; x++)
-{
-	document.getElementById("website"+(x+1)).innerHTML = 
-			copyTimerArray[x].hostname + " " + copyTimerArray[x].time;
-}
-
-localStorage.setItem("array", JSON.stringify(copyTimerArray));
 /*****************************
  Functions to access background 
  timer from popup.js 
@@ -78,6 +79,27 @@ function reset() {
 }
 
 function redirect() {	
+	var displayArray;
+	var option = document.getElementById("time");
+	var selected = option.options[option.selectedIndex].value;
+	if(selected == "today")
+	{
+		var displayArray = backgroundWindow.timerArray;
+	}else if(selected == "yesterday")
+	{
+		var displayArray = backgroundWindow.yesterdayArray;
+	} else
+	{
+		var displayArray = backgroundWindow.getLastWeek(backgroundWindow.weeklyTimerArray);
+	}
+	if(displayArray == null)
+	{
+		displayArray = "No data for yesterday";
+	}
+	else {
+		selectionSort(displayArray);
+	}
+	localStorage.setItem("array", JSON.stringify(displayArray));
 	location.href = "data.html";
 }
 /******************************

@@ -65,8 +65,8 @@ function startTimer () {
 			if (currDay != date.getDay()) {
 				updateTimerArray();
 			}
-			checkChromeUse();
-			//checkHostName();
+			//checkChromeUse();
+			checkHostName();
 		}, 1000);
 		running = true;
 	}
@@ -132,7 +132,7 @@ function checkHostName () {
 			console.log("Hostname: " + timerArray[0].getHostname() + " timer: " + timerArray[0].getTime());
 	});
 }
-
+/* commented out for testing popup refresh
 function checkChromeUse () {
 	chrome.windows.getCurrent(function(browser) {
 		if (browser.focused) {
@@ -143,7 +143,7 @@ function checkChromeUse () {
 		}
 	})
 }
-
+*/
 function getLastWeek(sepWeekArray) {
 	var wholeWeekArray = [];
 	//combining all arrays in the 7day array into one array
