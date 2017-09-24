@@ -59,8 +59,7 @@ Timer.prototype.increment =  function() {
 *************************************/
 function startTimer () {
 	console.log("starting timer");
-	if(running == false)
-	{
+	if(running == false) {
 		setChecker = setInterval(function(){
 			if (currDay != date.getDay()) {
 				updateTimerArray();
@@ -91,8 +90,7 @@ function checkHostName () {
 	}, function(tabArray) {
 			var url = new URL(tabArray[0].url);
 			console.log("this is whats in url " + url);
-			if(url == "popup.html")
-			{
+			if(url == "popup.html") {
 				console.log("its popup.html");
 				return;
 			}
@@ -132,7 +130,7 @@ function checkHostName () {
 			console.log("Hostname: " + timerArray[0].getHostname() + " timer: " + timerArray[0].getTime());
 	});
 }
-/* commented out for testing popup refresh
+// commented out for testing popup refresh
 function checkChromeUse () {
 	chrome.windows.getCurrent(function(browser) {
 		if (browser.focused) {
@@ -143,59 +141,66 @@ function checkChromeUse () {
 		}
 	})
 }
-*/
+
 function getLastWeek(sepWeekArray) {
 	var wholeWeekArray = [];
 	//combining all arrays in the 7day array into one array
-	for(var i = 0; i<6; i++)
-	{
+	for(var i = 0; i<6; i++) {
 		wholeWeekArray = wholeWeekArray.concat(sepWeekArray[i]);
 
 	}	
 	//checking for dups, adding time if dup found and setting one to null
-	for(i = 0; i < wholeWeekArray.length; i++)
-	{
-		if(wholeWeekArray[i] == null)
-		{
+	for(i = 0; i < wholeWeekArray.length; i++) {
+		if(wholeWeekArray[i] == null) {
 			continue;
 		}
-		for(var y = i+1; y < wholeWeekArray.length; y++)
-		{
-			if(wholeWeekArray[y] == null)
-			{
+		for(var y = i+1; y < wholeWeekArray.length; y++) {
+			if(wholeWeekArray[y] == null) {
 				continue;
 			}
-			if(wholeWeekArray[i].getHostname() == wholeWeekArray[y].getHostname())
-			{
+			if(wholeWeekArray[i].getHostname() == wholeWeekArray[y].getHostname()) {
 				wholeWeekArray[i].time += wholeWeekArray[y].time;
 				wholeWeekArray[y] = null;
 			}		
-
 		}	
 	}
-	
 	//copying over so there are no null gaps in the array. dunno if necessary but makes it cleaner
 	var combinedWeekArray = [];
 	y = 0;
-	for(i = 0; i < wholeWeekArray.length; i++)
-	{
-		if(wholeWeekArray[i] !== null)
-		{
+	for(i = 0; i < wholeWeekArray.length; i++) {
+		if(wholeWeekArray[i] !== null) {
 			combinedWeekArray[y] = wholeWeekArray[i];
 			y++;
 		}	
 	}	
 	return combinedWeekArray;
-	
-
-
 }
 
+/** Receive message from popup.js */
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		if (request.loaded) {
+			popUpLoaded();
+		}
+	});
 
+/* Controls timer when popUp is open. Allows timer
+to continue incrementing time on popup.html, even though
+there is no hostname */
+var popUpTimer;
+function popUpLoaded() {
+	console.log("LOADED");
+	stopTimer();
+	popUpTimer = setInterval(function() {
+		currentTimer.increment();
+		console.log("Hostname: " + timerArray[0].getHostname() + " timer: " + timerArray[0].getTime());
+	}, 1000);
+}
 
-
-
-
+function popUpUnloaded() {
+	clearInterval(popUpTimer);
+	startTimer();
+} 
 
 
 

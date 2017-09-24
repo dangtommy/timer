@@ -26,14 +26,12 @@ var displayTop5 = setInterval(function() {
 	var topNum =5
 	var length = copyTimerArray.length;
 	//Incase theres less than 5 websites so we dont access things that arnt there
-	if(length < 5)
-	{
+	if(length < 5) {
 		topNum = length;
 	}
 	
 	//Shows top websites and their time in popup.html
-	for(x = 0; x<topNum; x++)
-	{
+	for(x = 0; x<topNum; x++) {
 		document.getElementById("website"+(x+1)).innerHTML = 
 				copyTimerArray[x].hostname + " " + copyTimerArray[x].time;
 	}
@@ -46,13 +44,10 @@ var displayTop5 = setInterval(function() {
 function selectionSort(timerArray){
 	var length = timerArray.length;
 	var max,temp;
-	for(var x = 0; x < length; x++)
-	{
+	for(var x = 0; x < length; x++) {
 		max = x;
-		for(var y = x+1; y<length; y++)
-		{
-			if(timerArray[y].time > timerArray[max].time)
-			{
+		for(var y = x+1; y<length; y++) {
+			if(timerArray[y].time > timerArray[max].time) {
 				max = y;
 			}
 		}
@@ -78,22 +73,20 @@ function reset() {
 	backgroundWindow.resetTimer();
 }
 
+/* Based on the option selected, save corresponding array to 
+localStorage and redirect to data.html, where data will be displayed */
 function redirect() {	
 	var displayArray;
 	var option = document.getElementById("time");
 	var selected = option.options[option.selectedIndex].value;
-	if(selected == "today")
-	{
+	if(selected == "today") {
 		var displayArray = backgroundWindow.timerArray;
-	}else if(selected == "yesterday")
-	{
+	} else if(selected == "yesterday") {
 		var displayArray = backgroundWindow.yesterdayArray;
-	} else
-	{
+	} else {
 		var displayArray = backgroundWindow.getLastWeek(backgroundWindow.weeklyTimerArray);
 	}
-	if(displayArray == null)
-	{
+	if(displayArray == null) {
 		displayArray = "No data for yesterday";
 	}
 	else {
@@ -102,6 +95,7 @@ function redirect() {
 	localStorage.setItem("array", JSON.stringify(displayArray));
 	location.href = "data.html";
 }
+
 /******************************
 Popup.html Button Functionality
 ******************************/
@@ -110,3 +104,12 @@ document.getElementById('stop').onclick = popupStop;
 document.getElementById('reset').onclick = reset;
 document.getElementById('view').onclick = redirect;
 
+
+/* Popup open / close information */
+addEventListener('load',function(event) {
+	backgroundWindow.popUpLoaded();
+}, true);
+
+addEventListener('unload', function (event) {
+	backgroundWindow.popUpUnloaded();
+}, true);

@@ -12,9 +12,10 @@
 		"default_popup": "popup.html"
   },
 
-	"permissions": [
-	"tabs",
-	"activeTab",
-	"webNavigation"
-	]
+  "permissions": [
+  "tabs",
+  "activeTab",
+  "webNavigation",
+  "storage"
+  ]
 }
