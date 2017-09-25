@@ -18,6 +18,11 @@ for (var i = 0; i < 7; i++) {
 	weeklyTimerArray[i] = [];
 }
 
+// Variables for storing data	
+var currentTimer, yesterdayArray;
+/* Set timer to day's corresponding timer */
+var timerArray = weeklyTimerArray[currDay];
+
 /* Update timer array */
 function updateTimerArray () {
 	currDay = date.getDay(); //should update day first
@@ -26,12 +31,6 @@ function updateTimerArray () {
 	timerArray.length = 0;
 	currentTimer = null;
 }
-
-// Variables for storing data	
-var currentTimer, yesterdayArray;
-/* Set timer to day's corresponding timer */
-var timerArray = weeklyTimerArray[currDay];
-
 /***********************
 	Timer Object Type
 	& Object Functions
@@ -64,24 +63,29 @@ function startTimer () {
 			if (currDay != date.getDay()) {
 				updateTimerArray();
 			}
-			//checkChromeUse();
-			checkHostName();
+			checkChromeUse();
+			//checkHostName();
 		}, 1000);
 		running = true;
 	}
 }
 
+/** Stops timer */
 function stopTimer () {
+	console.log("Stopping timer");
 	clearInterval(setChecker);
 	running = false;
 }
 
+/** Resets Timer for the day */
 function resetTimer () {
+	console.log("Clearing timer");
 	stopTimer();
 	timerArray.length = 0;
 	currentTimer = null;
 }
 
+/** Helper function that determines the hostname of the current page */
 function checkHostName () {
 		chrome.tabs.query({
 			"active": true,
@@ -89,11 +93,6 @@ function checkHostName () {
 			"lastFocusedWindow": true
 	}, function(tabArray) {
 			var url = new URL(tabArray[0].url);
-			console.log("this is whats in url " + url);
-			if(url == "popup.html") {
-				console.log("its popup.html");
-				return;
-			}
 			var hostname = url.hostname;
 			
 			//null check
@@ -125,23 +124,19 @@ function checkHostName () {
 					currentTimer.increment();
 				}
 			}
-		//	alert("The hostname is: " + currentTimer.getHostname()
-		//			+ " with time " + currentTimer.getTime());
-			console.log("Hostname: " + timerArray[0].getHostname() + " timer: " + timerArray[0].getTime());
+			console.log("Hostname: " + currentTimer.getHostname() + " timer: " + currentTimer.getTime());
 	});
 }
-// commented out for testing popup refresh
+
+/** Function that restricts URL/HOSTNAME checking of checkHostname to active page */
 function checkChromeUse () {
 	chrome.windows.getCurrent(function(browser) {
-		if (browser.focused) {
-			checkHostName();
-		}
-		else {
-		console.log(" not focused");
-		}
+		if (browser.focused) checkHostName();
+		else console.log(" not focused");
 	})
 }
 
+/** Returns an array of the last week of timers, no dups */
 function getLastWeek(sepWeekArray) {
 	var wholeWeekArray = [];
 	//combining all arrays in the 7day array into one array
@@ -180,9 +175,12 @@ function getLastWeek(sepWeekArray) {
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request=="startSave") {
-			console.log("Save data here!");
+			chrome.storage.local.set({"weeklyArray": weeklyTimerArray});
+			chrome.storage.local.getBytesInUse(['weeklyArray'], function(bytes) {
+				console.log("Just saved, now using " + bytes + " bytes");
+			});
 		}
-	});
+});
 
 /* Controls timer when popUp is open. Allows timer
 to continue incrementing time on popup.html, even though
@@ -192,7 +190,7 @@ function popUpLoaded() {
 	stopTimer();
 	popUpTimer = setInterval(function() {
 		currentTimer.increment();
-		console.log("Hostname: " + timerArray[0].getHostname() + " timer: " + timerArray[0].getTime());
+		console.log("Hostname: " + currentTimer.getHostname() + " timer: " + currentTimer.getTime());
 	}, 1000);
 }
 
