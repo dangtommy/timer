@@ -199,9 +199,22 @@ function popUpUnloaded() {
 	startTimer();
 } 
 
+window.onunload = function (e) {
+	console.log("UNLOADING!@#EFJWEIFJSDIF!@!@!@!@");
+	alert("UNLOADING");
+}
 
 
-
+window.onload = function (e) {
+	console.log("LOADING LOADING LOADING");
+	chrome.storage.local.get(['weeklyArray'], function(array) {
+		weeklyTimerArray = array;
+		console.log(array);
+		console.log(weeklyTimerArray.length);
+		console.log("hi there");
+	});
+	chrome.storage.local.remove(['weeklyArray']);
+}
 
 
 
