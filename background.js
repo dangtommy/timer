@@ -176,11 +176,11 @@ function getLastWeek(sepWeekArray) {
 	return combinedWeekArray;
 }
 
-/** Receive message from popup.js */
+/** Receive message from content.js that initiates save */
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		if (request.loaded) {
-			popUpLoaded();
+		if (request=="startSave") {
+			console.log("Save data here!");
 		}
 	});
 
@@ -189,7 +189,6 @@ to continue incrementing time on popup.html, even though
 there is no hostname */
 var popUpTimer;
 function popUpLoaded() {
-	console.log("LOADED");
 	stopTimer();
 	popUpTimer = setInterval(function() {
 		currentTimer.increment();
