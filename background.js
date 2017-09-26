@@ -171,11 +171,13 @@ function getLastWeek(sepWeekArray) {
 	return combinedWeekArray;
 }
 
+var test = "Testing 1 2 3";
 /** Receive message from content.js that initiates save */
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request=="startSave") {
-			chrome.storage.local.set({"weeklyArray": weeklyTimerArray});
+			chrome.storage.local.set({weeklyTimerArray: weeklyTimerArray});
+			//chrome.storage.local.set({test: test});
 			chrome.storage.local.getBytesInUse(['weeklyArray'], function(bytes) {
 				console.log("Just saved, now using " + bytes + " bytes");
 			});
@@ -207,9 +209,11 @@ window.onunload = function (e) {
 
 window.onload = function (e) {
 	console.log("LOADING LOADING LOADING");
-	chrome.storage.local.get(['weeklyArray'], function(array) {
-		weeklyTimerArray = array;
-		console.log(array);
+	var weeklyArray;
+	chrome.storage.local.get({weeklyTimerArray}, function(array) {
+		weeklyTimerArray = array.weeklyTimerArray;
+		console.log(array.weeklyTimerArray);
+		console.log(weeklyTimerArray);
 		console.log(weeklyTimerArray.length);
 		console.log("hi there");
 	});
