@@ -33,11 +33,30 @@ var displayTop5 = setInterval(function() {
 	//Shows top websites and their time in popup.html
 	for(x = 0; x<topNum; x++) {
 		document.getElementById("website"+(x+1)).innerHTML = 
-				copyTimerArray[x].hostname + " " + copyTimerArray[x].time;
+				copyTimerArray[x].hostname;
+		document.getElementById("time"+(x+1)).innerHTML =
+				convertTime(copyTimerArray[x].time);
 	}
 },1000);
 
 
+function convertTime (time) {
+	var display = "";
+	if (Math.floor(time/3600) > 0) {
+		display += Math.floor(time/3600);
+		display += "h ";
+	}
+	time = time%3600;
+    if (Math.floor(time/60) > 0) {
+    	display += Math.floor(time/60);
+    	display += "m ";
+    }
+    time = time%60;
+    display += time;
+    display += "s ";
+
+	return display;
+}
 /*********************
 	Selection Sort 
 *********************/

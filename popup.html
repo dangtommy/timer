@@ -7,21 +7,47 @@
 		</title>	
 	</head>
 	<body>
-		<select id = "time">
-			<option value = "today">Today</option>
-			<option value = "yesterday">Yesterday</option>
-			<option value = "week">Last Week</option>
-		</select>
 		<p id="day"></p>
-		<p id = "website1"></p>
-		<p id = "website2"></p>
-		<p id = "website3"></p>
-		<p id = "website4"></p>
-		<p id = "website5"></p>
-	<button type="button" id="start"> Start </button>
-	<button type="button" id="stop"> Stop </button>
-	<button type="button" id="reset"> Reset </button>
-	<button type="button" id ="view"> View More Data </button>
+		<table>
+			<tr>
+				<th> Website </th>
+				<th> Time </th>
+			</tr>
+			<tr>
+				<td id="website1"></td>
+				<td id="time1"></td>
+			</tr>
+			<tr>
+				<td id="website2"></td>
+				<td id="time2"></td>
+			</tr>
+			<tr>
+				<td id="website3"></td>
+				<td id="time3"></td>
+			</tr>
+			<tr>
+				<td id="website4"></td>
+				<td id="time4"></td>
+			</tr>
+			<tr>
+				<td id="website5"></td>
+				<td id="time5"></td>
+			</tr>
+		</table>
+		<br>
+		<div class="buttonRow">
+			<button type="button" id="start"> Start </button>
+			<button type="button" id="stop"> Stop </button>
+			<button type="button" id="reset"> Reset </button>
+			<br>
+			<select id = "time">
+				<option value = "today">Today</option>
+				<option value = "yesterday">Yesterday</option>
+				<option value = "week">Last Week</option>
+			</select>
+			<button type="button" id ="view"> View More Data </button>
+		</div>
+		
 	<script src="popup.js" type="text/javascript">
 	</script>
 	<!--

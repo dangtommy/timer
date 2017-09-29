@@ -15,22 +15,24 @@ var currDay = date.getDay();
 
 /* 0-6 corresponds to sun-sat */
 for (var i = 0; i < 7; i++) {
-	weeklyTimerArray[i] = [];
+	weeklyTimerArray[i] = []; //<------- change to Map
 }
 
 // Variables for storing data	
-var currentTimer, yesterdayArray;
+var currentTimer, yesterdayArray; //<---- currentMap, yesterdayMap
+
 /* Set timer to day's corresponding timer */
-var timerArray = weeklyTimerArray[currDay];
+var timerArray = weeklyTimerArray[currDay]; //<------ timerMap
 
 /* Update timer array */
-function updateTimerArray () {
+function updateTimerArray () { //<----------- Map
 	currDay = date.getDay(); //should update day first
 	yesterdayArray = timerArray;
 	timerArray = weeklyTimerArray[currDay];
 	timerArray.length = 0;
 	currentTimer = null;
 }
+
 /***********************
 	Timer Object Type
 	& Object Functions
@@ -74,6 +76,7 @@ function startTimer () {
 function stopTimer () {
 	console.log("Stopping timer");
 	clearInterval(setChecker);
+	clearInterval(popUpTimer);
 	running = false;
 }
 
@@ -136,8 +139,8 @@ function checkChromeUse () {
 	})
 }
 
-/** Returns an array of the last week of timers, no dups */
-function getLastWeek(sepWeekArray) {
+/** Returns an array of the last week of timers, no dups */ 
+function getLastWeek(sepWeekArray) { //<----- Maps everywhere
 	var wholeWeekArray = [];
 	//combining all arrays in the 7day array into one array
 	for(var i = 0; i<6; i++) {
@@ -220,33 +223,13 @@ window.onload = function (e) {
 	console.log("LOADING LOADING LOADING");
 	//var weeklyArray;
 	chrome.storage.local.get({weeklyTimerArray}, function(array) {
-		console.log("Weekly Timer from Storage");
-		console.log(array.weeklyTimerArray);
-		console.log("Weekly Timer");
-		console.log(weeklyTimerArray);
-		console.log("Assignment");
 		weeklyTimerArray = array.weeklyTimerArray;
-		console.log(weeklyTimerArray);
-		console.log(weeklyTimerArray[currDay]);
-		//console.log("Current Timer is: " + currentTimer);
-		//console.log("Timer Array is: ");
-		//console.log(timerArray); 
-		/*
-		console.log("Weekly timer array is: ");
-		console.log(weeklyTimerArray);
-		*/
-		for (var i = 0; i < weeklyTimerArray[currDay].length; i++) {
+		for (var i = 0; i < weeklyTimerArray[currDay].length; i++) { // <---------- Map
 		  (weeklyTimerArray[currDay])[i] = new Timer((weeklyTimerArray[currDay][i].hostname), 
 		  					(weeklyTimerArray[currDay][i].time));
 		}
 		timerArray = weeklyTimerArray[currDay];
-		
-		console.log("Timer array: ");
-		console.log(timerArray);
-		//console.log("Current Timer is now: " + currentTimer);
-		
 	});
-	//chrome.storage.local.remove(['weeklyTimerArray']);
 }
 
 

@@ -3,6 +3,17 @@ body {
 	height: auto;
 }
 
+#day {
+	text-align: center;
+	width: 100%;
+}
+
+.buttonRow {
+	width: 100%;
+	justify-content: center;
+	text-align: center;
+}
+
 .sites {
 	width: 75%;
 	float: left;
@@ -11,4 +22,17 @@ body {
 .time {
 	width: 25%;
 	float: right;
+}
+
+table {
+	width: 100%;
+	height: auto;
+}
+
+tr:nth-child(even) {
+	background-color: #CCC;
+}
+
+th {
+	text-align: left;
 }
