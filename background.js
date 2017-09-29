@@ -35,13 +35,7 @@ function updateTimerArray () {
 	Timer Object Type
 	& Object Functions
 ***********************/
-function Timer (hostname) {
-	this.hostname = hostname;
-	this.time = 0;
-	return(this);
-}
-
-function Timer (hostname, time) {
+function Timer (hostname, time = 0) {
 	this.hostname = hostname;
 	this.time = time;
 	return(this);
@@ -232,16 +226,20 @@ window.onload = function (e) {
 		console.log(array.weeklyTimerArray);
 		console.log(weeklyTimerArray);
 		console.log(weeklyTimerArray[currDay]);*/
-		console.log("Current Timer is: " + currentTimer);
+		//console.log("Current Timer is: " + currentTimer);
+		console.log("Timer Array is: ");
 		console.log(timerArray);
-
-		timerArray = weeklyTimerArray[currDay];
+		console.log("Weekly timer array is: ");
+		console.log(weeklyTimerArray[currDay]);
 		for (var i = 0; i < weeklyTimerArray[currDay].length; i++) {
 		  (weeklyTimerArray[currDay])[i] = new Timer((weeklyTimerArray[currDay].hostname), 
 		  					(weeklyTimerArray[currDay].time));
 		}
+		timerArray = weeklyTimerArray[currDay];
+		
+		console.log("Timer array: ");
 		console.log(timerArray);
-		console.log("Current Timer is now: " + currentTimer);
+		//console.log("Current Timer is now: " + currentTimer);
 
 	});
 	//chrome.storage.local.remove(['weeklyTimerArray']);
