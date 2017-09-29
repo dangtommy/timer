@@ -220,27 +220,31 @@ window.onload = function (e) {
 	console.log("LOADING LOADING LOADING");
 	//var weeklyArray;
 	chrome.storage.local.get({weeklyTimerArray}, function(array) {
-		/*console.log(array.weeklyTimerArray);
-		console.log(weeklyTimerArray);*/
-		weeklyTimerArray = array.weeklyTimerArray;/*
+		console.log("Weekly Timer from Storage");
 		console.log(array.weeklyTimerArray);
+		console.log("Weekly Timer");
 		console.log(weeklyTimerArray);
-		console.log(weeklyTimerArray[currDay]);*/
-		//console.log("Current Timer is: " + currentTimer);
-		console.log("Timer Array is: ");
-		console.log(timerArray);
-		console.log("Weekly timer array is: ");
+		console.log("Assignment");
+		weeklyTimerArray = array.weeklyTimerArray;
+		console.log(weeklyTimerArray);
 		console.log(weeklyTimerArray[currDay]);
+		//console.log("Current Timer is: " + currentTimer);
+		//console.log("Timer Array is: ");
+		//console.log(timerArray); 
+		/*
+		console.log("Weekly timer array is: ");
+		console.log(weeklyTimerArray);
+		*/
 		for (var i = 0; i < weeklyTimerArray[currDay].length; i++) {
-		  (weeklyTimerArray[currDay])[i] = new Timer((weeklyTimerArray[currDay].hostname), 
-		  					(weeklyTimerArray[currDay].time));
+		  (weeklyTimerArray[currDay])[i] = new Timer((weeklyTimerArray[currDay][i].hostname), 
+		  					(weeklyTimerArray[currDay][i].time));
 		}
 		timerArray = weeklyTimerArray[currDay];
 		
 		console.log("Timer array: ");
 		console.log(timerArray);
 		//console.log("Current Timer is now: " + currentTimer);
-
+		
 	});
 	//chrome.storage.local.remove(['weeklyTimerArray']);
 }
