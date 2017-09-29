@@ -41,6 +41,12 @@ function Timer (hostname) {
 	return(this);
 }
 
+function Timer (hostname, time) {
+	this.hostname = hostname;
+	this.time = time;
+	return(this);
+}
+
 Timer.prototype.getTime = function() {
 	return this.time;
 }
@@ -176,12 +182,21 @@ var test = "Testing 1 2 3";
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request=="startSave") {
+			console.log(weeklyTimerArray);
 			chrome.storage.local.set({weeklyTimerArray: weeklyTimerArray});
 			//chrome.storage.local.set({test: test});
-			chrome.storage.local.getBytesInUse(['weeklyArray'], function(bytes) {
+			chrome.storage.local.getBytesInUse(['weeklyTimerArray'], function(bytes) {
 				console.log("Just saved, now using " + bytes + " bytes");
 			});
 		}
+		/*
+	chrome.storage.local.get({weeklyTimerArray}, function(array) {
+		weeklyTimerArray = array.weeklyTimerArray;
+		console.log(array.weeklyTimerArray);
+		console.log(weeklyTimerArray);
+		console.log(weeklyTimerArray.length);
+		console.log("hi there");
+	});*/
 });
 
 /* Controls timer when popUp is open. Allows timer
@@ -209,15 +224,27 @@ window.onunload = function (e) {
 
 window.onload = function (e) {
 	console.log("LOADING LOADING LOADING");
-	var weeklyArray;
+	//var weeklyArray;
 	chrome.storage.local.get({weeklyTimerArray}, function(array) {
-		weeklyTimerArray = array.weeklyTimerArray;
+		/*console.log(array.weeklyTimerArray);
+		console.log(weeklyTimerArray);*/
+		weeklyTimerArray = array.weeklyTimerArray;/*
 		console.log(array.weeklyTimerArray);
 		console.log(weeklyTimerArray);
-		console.log(weeklyTimerArray.length);
-		console.log("hi there");
+		console.log(weeklyTimerArray[currDay]);*/
+		console.log("Current Timer is: " + currentTimer);
+		console.log(timerArray);
+
+		timerArray = weeklyTimerArray[currDay];
+		for (var i = 0; i < weeklyTimerArray[currDay].length; i++) {
+		  (weeklyTimerArray[currDay])[i] = new Timer((weeklyTimerArray[currDay].hostname), 
+		  					(weeklyTimerArray[currDay].time));
+		}
+		console.log(timerArray);
+		console.log("Current Timer is now: " + currentTimer);
+
 	});
-	chrome.storage.local.remove(['weeklyArray']);
+	//chrome.storage.local.remove(['weeklyTimerArray']);
 }
 
 
