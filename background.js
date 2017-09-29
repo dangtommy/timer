@@ -1,5 +1,6 @@
 /** Begin timer on startup */
 var running = false;
+var popupup = false;
 startTimer();
 
 /***************************
@@ -59,8 +60,11 @@ Timer.prototype.increment =  function() {
 	Timer Control Functions
 *************************************/
 function startTimer () {
-	console.log("starting timer");
-	if(running == false) {
+	if (popupup && !running) {
+		popUpLoaded();
+	}
+	else if(!running && !popupup) {
+		console.log("starting timer");
 		setChecker = setInterval(function(){
 			if (currDay != date.getDay()) {
 				updateTimerArray();
@@ -74,7 +78,7 @@ function startTimer () {
 
 /** Stops timer */
 function stopTimer () {
-	console.log("Stopping timer");
+	console.log("Stops all timers");
 	clearInterval(setChecker);
 	clearInterval(popUpTimer);
 	running = false;
@@ -201,6 +205,8 @@ to continue incrementing time on popup.html, even though
 there is no hostname */
 var popUpTimer;
 function popUpLoaded() {
+	console.log("Starting popup timer");
+	popupup = true;
 	stopTimer();
 	popUpTimer = setInterval(function() {
 		currentTimer.increment();
@@ -208,8 +214,14 @@ function popUpLoaded() {
 	}, 1000);
 }
 
-function popUpUnloaded() {
+function stopPopUpTimer() {
+	console.log("Stopping popuptimer");
 	clearInterval(popUpTimer);
+}
+
+function popUpUnloaded() {
+	popupup = false;
+	stopPopUpTimer();
 	startTimer();
 } 
 
