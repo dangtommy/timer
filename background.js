@@ -101,38 +101,52 @@ function checkHostName () {
 	}, function(tabArray) {
 			var url = new URL(tabArray[0].url);
 			var hostname = url.hostname;
+			//set current timer to corresponding timer if applicable on start up
+			for (var i = 0; i < timerArray.length; i++) {
+				if (hostname == timerArray[i].hostname) {
+					currentTimer = timerArray[i];
+					console.log(hostname + " is the same as " + timerArray[i].hostname);
+				}
+			}
 			
-			//null check
+			//ON STARTUP case-- no timer
 			if (!currentTimer) {
-				currentTimer = new Timer(hostname);
-				console.log(currentTimer);
-				timerArray.push(currentTimer);
+				//set current timer to corresponding timer if applicable on start up
+				currentTimer = findTimer(timerArray, hostname);
+				//if !currentTimer, hostname not in array yet
+				if (!currentTimer) {
+					console.log("Creating new timer");
+					currentTimer = new Timer(hostname);
+					timerArray.push(currentTimer);
+				}
 				currentTimer.increment();
 			}
 			//check if no change
 			else if (hostname == currentTimer.getHostname()) {
+				console.log("incrementing because same");
 				currentTimer.increment();
 			}
-			//check if in array
+			//NOT startup, NOT same
 			else {
-				var present = false;
-				//if present, bring up the old timer
-				for (var i = 0; i < timerArray.length; i++) {
-					if (hostname == timerArray[i].hostname) {
-						present = true;
-						currentTimer = timerArray[i];
-						currentTimer.increment();
-					}
-				}
-				//if not in array, will add new timer
-				if (!present) {
+				currentTimer = findTimer(timerArray, hostname);
+				//cannot find
+				if (!currentTimer) {
+					console.log("Creating new timer");
 					currentTimer = new Timer(hostname);
 					timerArray.push(currentTimer);
-					currentTimer.increment();
 				}
+				currentTimer.increment();
 			}
 			console.log("Hostname: " + currentTimer.getHostname() + " timer: " + currentTimer.getTime());
 	});
+}
+
+function findTimer (timerArray, hostname) {
+	for (var i = 0; i < timerArray.length; i++) {
+		if (hostname == timerArray[i].hostname) {
+			return timerArray[i];
+		}
+	}
 }
 
 /** Function that restricts URL/HOSTNAME checking of checkHostname to active page */
