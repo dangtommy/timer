@@ -1,8 +1,12 @@
 /* Retrieves data from localStorage of the array to display */
 var data = localStorage.getItem("array");
 data = JSON.parse(data);
-if(data == "No data for yesterday")
-	document.getElementById("timerData").innerHTML = data;
+if(data == "No data for yesterday") {
+	var tableEntryRow = document.createElement("tr");
+	var nodeText = document.createTextNode(data);
+	tableEntryRow.appendChild(nodeText);
+	document.getElementById("data").appendChild(tableEntryRow);
+	}
 else{
 	var compiledData= "";
 	for(var x = 0; x<data.length; x++) {
