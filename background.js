@@ -90,6 +90,9 @@ function resetTimer () {
 	console.log("Clearing timer");
 	stopTimer();
 	timerArray.length = 0;
+	for(var x = 0; x<7; x++) {
+		weeklyTimerArray[x].length = 0;
+	}
 	currentTimer.time = 0;
 	timerArray[0]=currentTimer;
 	chrome.storage.local.clear(function() {

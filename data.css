@@ -1,0 +1,17 @@
+body {
+	width: 400px;
+	height: auto;
+}
+
+table {
+	width: 100%;
+	height: auto;
+}
+
+tr:nth-child(even) {
+	background-color: #CCC;
+}
+
+th {
+	text-align: left;
+}	
