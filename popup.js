@@ -37,6 +37,13 @@ var displayTop5 = setInterval(function() {
 		document.getElementById("time"+(x+1)).innerHTML =
 				convertTime(copyTimerArray[x].time);
 	}
+	for(x = topNum; x<5; x++) {
+		document.getElementById("website"+(x+1)).innerHTML = 
+				"";
+		document.getElementById("time"+(x+1)).innerHTML =
+				"";
+	}
+		
 },1000);
 
 

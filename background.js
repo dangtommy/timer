@@ -61,6 +61,7 @@ Timer.prototype.increment =  function() {
 *************************************/
 function startTimer () {
 	if (popupup && !running) {
+		console.log("STARTING POPUPUP IS TRUE");
 		popUpLoaded();
 	}
 	else if(!running && !popupup) {
@@ -89,7 +90,12 @@ function resetTimer () {
 	console.log("Clearing timer");
 	stopTimer();
 	timerArray.length = 0;
-	currentTimer = null;
+	currentTimer.time = 0;
+	timerArray[0]=currentTimer;
+	chrome.storage.local.clear(function() {
+		console.log("Storage Cleared!");
+	});
+	startTimer();
 }
 
 /** Helper function that determines the hostname of the current page */
