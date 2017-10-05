@@ -20,10 +20,11 @@ for (var i = 0; i < 7; i++) {
 }
 
 // Variables for storing data	
-var currentTimer, yesterdayArray; //<---- currentMap, yesterdayMap
+var currentTimer; //<---- currentMap, yesterdayMap
 
 /* Set timer to day's corresponding timer */
 var timerArray = weeklyTimerArray[currDay]; //<------ timerMap
+var yesterdayArray = weeklyTimerArray[currDay-1];
 
 /* Update timer array */
 function updateTimerArray () { //<----------- Map
@@ -171,11 +172,16 @@ function getLastWeek(sepWeekArray) { //<----- Maps everywhere
 	var wholeWeekArray = [];
 	//combining all arrays in the 7day array into one array
 	for(var i = 0; i<6; i++) {
+		if (sepWeekArray[i].length > 0 && i != currDay) {
+			for (var j = 0; j < sepWeekArray[i].length; j++) {
+				(sepWeekArray[i][j] = new Timer((sepWeekArray[i][j].hostname), 
+		  					(sepWeekArray[i][j]).time));
+			}
+		}
 		wholeWeekArray = wholeWeekArray.concat(sepWeekArray[i]);
-
 	}	
 	//checking for dups, adding time if dup found and setting one to null
-	for(i = 0; i < wholeWeekArray.length; i++) {
+	for(var i = 0; i < wholeWeekArray.length; i++) {
 		if(wholeWeekArray[i] == null) {
 			continue;
 		}
@@ -192,7 +198,7 @@ function getLastWeek(sepWeekArray) { //<----- Maps everywhere
 	//copying over so there are no null gaps in the array. dunno if necessary but makes it cleaner
 	var combinedWeekArray = [];
 	y = 0;
-	for(i = 0; i < wholeWeekArray.length; i++) {
+	for(var i = 0; i < wholeWeekArray.length; i++) {
 		if(wholeWeekArray[i] !== null) {
 			combinedWeekArray[y] = wholeWeekArray[i];
 			y++;
@@ -213,14 +219,6 @@ chrome.runtime.onMessage.addListener(
 				console.log("Just saved, now using " + bytes + " bytes");
 			});
 		}
-		/*
-	chrome.storage.local.get({weeklyTimerArray}, function(array) {
-		weeklyTimerArray = array.weeklyTimerArray;
-		console.log(array.weeklyTimerArray);
-		console.log(weeklyTimerArray);
-		console.log(weeklyTimerArray.length);
-		console.log("hi there");
-	});*/
 });
 
 /* Controls timer when popUp is open. Allows timer
@@ -252,7 +250,6 @@ window.onunload = function (e) {
 	console.log("UNLOADING!@#EFJWEIFJSDIF!@!@!@!@");
 	alert("UNLOADING");
 }
-
 
 window.onload = function (e) {
 	console.log("LOADING LOADING LOADING");

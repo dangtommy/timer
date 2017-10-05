@@ -108,7 +108,8 @@ function redirect() {
 	if(selected == "today") {
 		var displayArray = backgroundWindow.timerArray;
 	} else if(selected == "yesterday") {
-		var displayArray = backgroundWindow.yesterdayArray;
+		console.log(backgroundWindow.weeklyTimerArray[backgroundWindow.currDay-1]);
+		var displayArray = backgroundWindow.weeklyTimerArray[backgroundWindow.currDay-1];
 	} else {
 		var displayArray = backgroundWindow.getLastWeek(backgroundWindow.weeklyTimerArray);
 	}
