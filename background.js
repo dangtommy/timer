@@ -68,6 +68,8 @@ function startTimer () {
 	else if(!running && !popupup) {
 		console.log("starting timer");
 		setChecker = setInterval(function(){
+			date = new Date();
+			currDay = date.getDay();
 			if (currDay != date.getDay()) {
 				updateTimerArray();
 			}
