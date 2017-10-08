@@ -30,10 +30,12 @@ var displayTop5 = setInterval(function() {
 	if(length < 5) {
 		topNum = length;
 	}
-	console.log("TopNum is: " + topNum + " copyArrayTimer length is: " + copyTimerArray.length);
+	console.log("Table is: ");
+	console.log(document.getElementById("data"));
 	//Shows top websites and their time in popup.html
 	if (topNum > prevTopNum) {
 		for (var i = prevTopNum; i < topNum; i++) {
+			console.log("Going to create new table entry")
 			var tableEntryRow = document.createElement("tr");
 			var tableEntryCol1 = document.createElement("td");
 			var tableEntryCol2 = document.createElement("td");
@@ -46,6 +48,8 @@ var displayTop5 = setInterval(function() {
 			tableEntryRow.appendChild(tableEntryCol1);
 			tableEntryRow.appendChild(tableEntryCol2);
 			var table = document.getElementById("data");
+			console.log("Table is: ");
+			console.log(table);
 			table.appendChild(tableEntryRow);
 			tableEntryRow.id = "row"+i;
 			prevTopNum = topNum;
@@ -174,18 +178,28 @@ function showReset() {
 	} else {
 		console.log("display none");
 		x.style.display = "none";
+		document.getElementById("resetError").innerHTML=" ";
 	}
 }
 
 function checkReset() {
 	var x = document.getElementById("resetString").value;
 	console.log("in check rest, x is: " + x);
-	if (x === "reset") reset();
+	if (x === "reset") {
+		reset();
+		var table = document.getElementById("data");
+		for (var i = 0; i < prevTopNum; i++) {
+			var child = document.getElementById("row"+i);
+			table.removeChild(child);
 
-	//clears table display
-	var table = document.getElementById("data");
-	for (var i = 0; i < prevTopNum; i++) {
-		var child = document.getElementById("row"+i)
-		table.remove(child);
+		}
+		console.log("Table is: ");
+		console.log(table);
+		prevTopNum = 0;
+		document.getElementById("resetError").innerHTML=" ";
+		copyArrayTimer = backgroundWindow.timerArray;
+		
+	} else {
+		document.getElementById("resetError").innerHTML = "You typed in the wrong word.";
 	}
 }
