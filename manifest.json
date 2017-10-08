@@ -4,6 +4,8 @@
   "description": "This extension shows how much time is spent on websites",
   "version": "1.0",
 
+  "icons": { "128" : "timer128.png"
+  },
   "background": {
   		"scripts": ["background.js"]
   },
