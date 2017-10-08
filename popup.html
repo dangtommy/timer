@@ -38,7 +38,7 @@
 		<div class="buttonRow">
 			<button type="button" id="start"> Start </button>
 			<button type="button" id="stop"> Stop </button>
-			<button type="button" id="reset"> Reset </button>
+			<button type="button" id="show"> Reset </button>
 			<br>
 			<button type="button" id ="view"> View More Data For </button>
 			<select id = "time">
@@ -47,12 +47,12 @@
 				<option value = "week">Last Week</option>
 			</select>
 		</div>
-		
+		<div id="resetCheck"> 
+			<p> Type 'reset' and click Submit to reset your data </p>
+			<input id="resetString">
+			<button type="button" id="check"> Submit </button>
+		</div>
 	<script src="popup.js" type="text/javascript">
 	</script>
-	<!--
-		<p> Your most visited websites: </p>
-		<div class="sites"> www.examplewebsite.com </div>
-		<div class="time"> 10 hours, 20 mins </div> -->
 	</body>
 </html>

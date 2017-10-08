@@ -128,9 +128,9 @@ Popup.html Button Functionality
 ******************************/
 document.getElementById('start').onclick = popupStart;
 document.getElementById('stop').onclick = popupStop;
-document.getElementById('reset').onclick = reset;
+document.getElementById('show').onclick = showReset;
 document.getElementById('view').onclick = redirect;
-
+document.getElementById('check').onclick = checkReset;
 
 /* Popup open / close information */
 addEventListener('load',function(event) {
@@ -140,3 +140,25 @@ addEventListener('load',function(event) {
 addEventListener('unload', function (event) {
 	backgroundWindow.popUpUnloaded();
 }, true);
+
+
+/**********************
+Reset Button Functions
+***********************/
+function showReset() {
+	var x = document.getElementById("resetCheck");
+	console.log("x.style.display is: " + x.style.display)
+	if (x.style.display === "none" || !x.style.display) {
+		console.log("display block");
+		x.style.display = "block";
+	} else {
+		console.log("display none");
+		x.style.display = "none";
+	}
+}
+
+function checkReset() {
+	var x = document.getElementById("resetString").value;
+	console.log("in check rest, x is: " + x);
+	if (x === "reset") reset();
+}
