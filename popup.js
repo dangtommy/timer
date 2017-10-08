@@ -21,29 +21,49 @@ document.getElementById("day").innerHTML = weekday[backgroundWindow.currDay] + "
 /*************************************
 	Displaying top 5 websites by time in popup
 **************************************/
+var prevTopNum = 0;
 var displayTop5 = setInterval(function() {
 	selectionSort(copyTimerArray);
-	var topNum =5
+	var topNum = 5;
 	var length = copyTimerArray.length;
 	//Incase theres less than 5 websites so we dont access things that arnt there
 	if(length < 5) {
 		topNum = length;
 	}
-	
+	console.log("TopNum is: " + topNum + " copyArrayTimer length is: " + copyTimerArray.length);
 	//Shows top websites and their time in popup.html
+	if (topNum > prevTopNum) {
+		for (var i = prevTopNum; i < topNum; i++) {
+			var tableEntryRow = document.createElement("tr");
+			var tableEntryCol1 = document.createElement("td");
+			var tableEntryCol2 = document.createElement("td");
+			tableEntryCol1.id = "website"+(i+1);
+			tableEntryCol2.id = "time"+(i+1);
+			var node1 = document.createTextNode(copyTimerArray[i].hostname);
+			var node2 = document.createTextNode(convertTime(copyTimerArray[i].time));
+			tableEntryCol1.appendChild(node1);	
+			tableEntryCol2.appendChild(node2);	
+			tableEntryRow.appendChild(tableEntryCol1);
+			tableEntryRow.appendChild(tableEntryCol2);
+			var table = document.getElementById("data");
+			table.appendChild(tableEntryRow);
+			tableEntryRow.id = "row"+i;
+			prevTopNum = topNum;
+		}
+	}
 	for(x = 0; x<topNum; x++) {
 		document.getElementById("website"+(x+1)).innerHTML = 
 				copyTimerArray[x].hostname;
 		document.getElementById("time"+(x+1)).innerHTML =
 				convertTime(copyTimerArray[x].time);
 	}
+	/*
 	for(x = topNum; x<5; x++) {
 		document.getElementById("website"+(x+1)).innerHTML = 
 				"";
 		document.getElementById("time"+(x+1)).innerHTML =
 				"";
-	}
-		
+	}*/
 },1000);
 
 
@@ -161,4 +181,11 @@ function checkReset() {
 	var x = document.getElementById("resetString").value;
 	console.log("in check rest, x is: " + x);
 	if (x === "reset") reset();
+
+	//clears table display
+	var table = document.getElementById("data");
+	for (var i = 0; i < prevTopNum; i++) {
+		var child = document.getElementById("row"+i)
+		table.remove(child);
+	}
 }
