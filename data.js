@@ -1,6 +1,7 @@
 /* Retrieves data from localStorage of the array to display */
-var data = localStorage.getItem("array");
-data = JSON.parse(data);
+var data = localStorage.getItem("array"); //Getting data from background.js
+data = JSON.parse(data); 
+
 if(data == "No data for yesterday") {
 	var tableEntryRow = document.createElement("tr");
 	var nodeText = document.createTextNode(data);
@@ -9,6 +10,7 @@ if(data == "No data for yesterday") {
 	}
 else{
 	var compiledData= "";
+	//Creates HTML elements for each timer
 	for(var x = 0; x<data.length; x++) {
 		compiledData = compiledData.concat(data[x].hostname +
 						" " + data[x].time + "\n");
@@ -32,7 +34,7 @@ function back() {
 }
 document.getElementById("goBack").onclick = back;
 
-
+//Converts time from seconds to hours, minutes, seconds
 function convertTime (time) {
 	var display = "";
 	if (Math.floor(time/3600) > 0) {

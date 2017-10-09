@@ -30,12 +30,9 @@ var displayTop5 = setInterval(function() {
 	if(length < 5) {
 		topNum = length;
 	}
-	console.log("Table is: ");
-	console.log(document.getElementById("data"));
 	//Shows top websites and their time in popup.html
 	if (topNum > prevTopNum) {
 		for (var i = prevTopNum; i < topNum; i++) {
-			console.log("Going to create new table entry")
 			var tableEntryRow = document.createElement("tr");
 			var tableEntryCol1 = document.createElement("td");
 			var tableEntryCol2 = document.createElement("td");
@@ -48,8 +45,6 @@ var displayTop5 = setInterval(function() {
 			tableEntryRow.appendChild(tableEntryCol1);
 			tableEntryRow.appendChild(tableEntryCol2);
 			var table = document.getElementById("data");
-			console.log("Table is: ");
-			console.log(table);
 			table.appendChild(tableEntryRow);
 			tableEntryRow.id = "row"+i;
 			prevTopNum = topNum;
@@ -61,16 +56,9 @@ var displayTop5 = setInterval(function() {
 		document.getElementById("time"+(x+1)).innerHTML =
 				convertTime(copyTimerArray[x].time);
 	}
-	/*
-	for(x = topNum; x<5; x++) {
-		document.getElementById("website"+(x+1)).innerHTML = 
-				"";
-		document.getElementById("time"+(x+1)).innerHTML =
-				"";
-	}*/
 },1000);
 
-
+//Converts time from seconds to hours, minutes, seconds
 function convertTime (time) {
 	var display = "";
 	if (Math.floor(time/3600) > 0) {
@@ -169,6 +157,7 @@ addEventListener('unload', function (event) {
 /**********************
 Reset Button Functions
 ***********************/
+//Shows confirmation for reset on popup.html
 function showReset() {
 	var x = document.getElementById("resetCheck");
 	console.log("x.style.display is: " + x.style.display)
@@ -182,6 +171,7 @@ function showReset() {
 	}
 }
 
+//Checks if string input for reset matches 
 function checkReset() {
 	var x = document.getElementById("resetString").value;
 	console.log("in check rest, x is: " + x);
