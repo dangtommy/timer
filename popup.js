@@ -1,3 +1,7 @@
+/**  Contains js functions for popup.html. Includes functions to display 
+     top 5 websites on popup.html, converting time, and basic button functions.
+     **/
+
 /*****************************************
 	Retrieving Info from background.js
 *****************************************/
@@ -16,7 +20,7 @@ weekday[3] = "Wednesday";
 weekday[4] = "Thursday";
 weekday[5] = "Friday";
 weekday[6] = "Saturday";
-document.getElementById("day").innerHTML = weekday[backgroundWindow.currDay] + " Timer";
+document.getElementById("day").innerHTML = weekday[backgroundWindow.currDay];
 
 /*************************************
 	Displaying top 5 websites by time in popup
@@ -160,6 +164,7 @@ Reset Button Functions
 //Shows confirmation for reset on popup.html
 function showReset() {
 	var x = document.getElementById("resetCheck");
+	//Changing display css value
 	console.log("x.style.display is: " + x.style.display)
 	if (x.style.display === "none" || !x.style.display) {
 		console.log("display block");
@@ -174,7 +179,6 @@ function showReset() {
 //Checks if string input for reset matches 
 function checkReset() {
 	var x = document.getElementById("resetString").value;
-	console.log("in check rest, x is: " + x);
 	if (x === "reset") {
 		reset();
 		var table = document.getElementById("data");
@@ -183,7 +187,6 @@ function checkReset() {
 			table.removeChild(child);
 
 		}
-		console.log("Table is: ");
 		console.log(table);
 		prevTopNum = 0;
 		document.getElementById("resetError").innerHTML=" ";

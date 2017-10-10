@@ -1,4 +1,7 @@
-/* Retrieves data from localStorage of the array to display */
+/****************************************
+   Retrieves data from localStorage of the array to display 
+   on data.html
+   *****************************************/
 var data = localStorage.getItem("array"); //Getting data from background.js
 data = JSON.parse(data); 
 

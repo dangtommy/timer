@@ -1,3 +1,8 @@
+/** Background.js controls and maintains timers in extension background.
+    Contains timer object prototypes and functions to control timers, save
+    and load, and check if chrome is in focus. Holds all weekly timer
+    data. */
+
 /** Begin timer on startup */
 var running = false;
 var popupup = false;
@@ -19,19 +24,18 @@ var currDay = date.getDay();
 /* Initializing weeklyTimerArray with timerArrays 
    0-6 for Sunday - Saturday */
 for (var i = 0; i < 7; i++) {
-	weeklyTimerArray[i] = []; //<------- change to Map
+	weeklyTimerArray[i] = [];
 }
 
 // Variables for storing data	
-var currentTimer; //<---- currentMap, yesterdayMap
+var currentTimer; 
 
 /* Set timer to day's corresponding timer */
-var timerArray = weeklyTimerArray[currDay]; //<------ timerMap
+var timerArray = weeklyTimerArray[currDay]; 
 var yesterdayArray = weeklyTimerArray[currDay-1];
 
 /* Function to update weeklyTimerArray when day changes */
-function updateTimerArray () { //<----------- Map
-	console.log("UPDATING TIMER");
+function updateTimerArray () {
 	currDay = date.getDay(); //should update day first
 	yesterdayArray = timerArray;
 	timerArray = weeklyTimerArray[currDay];
@@ -157,7 +161,7 @@ function checkHostName () {
 			}
 	});
 }
-
+//Finds timer in timer array with matching hostname
 function findTimer (timerArray, hostname) {
 	for (var i = 0; i < timerArray.length; i++) {
 		if (hostname == timerArray[i].hostname) {
@@ -176,7 +180,7 @@ function checkChromeUse () {
 
 /** Returns all data from alst week in one array, duplicates combined
 */ 
-function getLastWeek(sepWeekArray) { //<----- Maps everywhere
+function getLastWeek(sepWeekArray) { 
 	var wholeWeekArray = [];
 	//combining all arrays in the 7day array into one array
 	for(var i = 0; i<6; i++) {
@@ -241,12 +245,10 @@ function popUpLoaded() {
 	stopTimer();
 	popUpTimer = setInterval(function() {
 		currentTimer.increment();
-		console.log("Hostname: " + currentTimer.getHostname() + " timer: " + currentTimer.getTime());
 	}, 1000);
 }
 
 //Stops timer created for popup case
-//do we need this?
 function stopPopUpTimer() {
 	console.log("Stopping popuptimer");
 	clearInterval(popUpTimer);
@@ -260,7 +262,7 @@ function popUpUnloaded() {
 } 
 
 /* Function that runs whenever chrome is loaded, loads data from 
-   local storage. ACTUALLY cant we just start the timer here? */
+   local storage*/
 window.onload = function (e) {
 	chrome.storage.local.get({weeklyTimerArray}, function(array) {
 		weeklyTimerArray = array.weeklyTimerArray;
@@ -271,25 +273,4 @@ window.onload = function (e) {
 		timerArray = weeklyTimerArray[currDay];
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
