@@ -31,6 +31,7 @@ var yesterdayArray = weeklyTimerArray[currDay-1];
 
 /* Function to update weeklyTimerArray when day changes */
 function updateTimerArray () { //<----------- Map
+	console.log("UPDATING TIMER");
 	currDay = date.getDay(); //should update day first
 	yesterdayArray = timerArray;
 	timerArray = weeklyTimerArray[currDay];
@@ -80,7 +81,6 @@ function startTimer () {
 		//Checks website hostname and updates timer every second
 		setChecker = setInterval(function(){
 			date = new Date();
-			currDay = date.getDay();
 			if (currDay != date.getDay()) {
 				updateTimerArray();
 			}
