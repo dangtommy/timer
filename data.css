@@ -3,6 +3,10 @@ body {
 	height: auto;
 }
 
+button {
+	border: none;
+	padding: 5px;
+}
 table {
 	width: 100%;
 	height: auto;

@@ -8,12 +8,41 @@ body {
 	width: 100%;
 }
 
-.buttonRow {
-	width: 100%;
-	justify-content: center;
-	text-align: center;
+button {
+	border: none;
+	padding: 5px;
 }
 
+#start {
+	background-color: green;
+	color: white;
+}
+
+#start:hover, #start:active, #start:focus {
+	background-color: #006400;
+}
+
+#stop {
+	background-color: red;
+	color: white;
+}
+
+#stop:hover, #stop:active, #stop:focus {
+	background-color: #B22222;
+}
+
+#show:hover, #show:active, #show:focus {
+	background-color: black;
+	color: white;
+}
+
+#view {
+	background-color: #3498DB  ;
+	color: white;
+}
+#view:hover, #view:active, #view:focus {
+	background-color: #2B7EB4;
+}
 .sites {
 	width: 75%;
 	float: left;
