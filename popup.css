@@ -70,3 +70,7 @@ th {
 	text-align: center;
 	display: none;
 }
+
+select {
+	min-height: 28px;
+}
